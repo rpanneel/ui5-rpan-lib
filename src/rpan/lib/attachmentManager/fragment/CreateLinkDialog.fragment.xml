@@ -1,0 +1,40 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:forms="sap.ui.layout.form">
+	<Dialog
+		title="{i18n>dialog.tit.create.link}">
+		<content>
+			<forms:SimpleForm
+				class="editableForm"
+				columnsL="1"
+				columnsM="1"
+				editable="true"
+				emptySpanL="2"
+				emptySpanM="2"
+				labelSpanL="3"
+				labelSpanM="3"
+				layout="ResponsiveGridLayout"
+				maxContainerCols="2"
+				minWidth="1024">
+				<forms:content>
+					<Label text="{i18n>lbl.txt.url}" required="true"/>
+					<Input value="{attachmentManagerLink>/link}" placeholder="{i18n>input.link.placeholder}" />
+					<Label text="{i18n>lbl.txt.description}" />
+					<Input value="{attachmentManagerLink>/description}" placeholder="{i18n>input.description.placeholder}" />
+				</forms:content>
+			</forms:SimpleForm>
+		</content>
+		<beginButton>
+			<Button
+				text="{i18n>btn.add.link}"
+				type="Emphasized"
+				press="onLinkAddPress" />
+		</beginButton>
+		<endButton>
+			<Button
+				text="{i18n>btn.cancel}"
+				press="onLinkCancelPress" />
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<library xmlns="http://www.sap.com/sap.ui.library.xsd" >
+  <name>rpan.lib</name>
+  <vendor>robin</vendor>
+  <copyright>${copyright}</copyright>
+  <version>${version}</version>
+  <documentation>UI5 library of Infrabel, containing reusable components for Fiori Apps</documentation>
+  <dependencies>
+    <dependency>
+      <libraryName>sap.ui.core</libraryName>
+    </dependency>
+    <dependency>
+    	<libraryName>sap.m</libraryName>
+    </dependency>
+    <dependency>
+        <libraryName>sap.ui.unified</libraryName>
+    </dependency>
+  </dependencies>
+  <appData>
+    <!-- Excludes for the JSDoc -->
+    <jsdoc xmlns="http://www.sap.com/ui5/buildext/jsdoc">
+        <exclude name="rpan.lib.library.js" />
+    </jsdoc>
+    <!-- Excludes for the JSCoverage -->
+    <jscoverage xmlns="http://www.sap.com/ui5/buildext/jscoverage">
+        <exclude name="rpan.lib.library.js" />
+    </jscoverage>
+  </appData>
+</library>

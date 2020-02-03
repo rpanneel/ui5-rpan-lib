@@ -1,0 +1,78 @@
+{
+	"_version": "1.9.0",
+	"sap.app": {
+		"id": "rpan.lib.attachmentManager",
+		"type": "component",
+		"embeddedBy": "../",
+		"i18n": "i18n/i18n.properties",
+		"title": "{{compTitle}}",
+		"description": "{{compDescription}}",
+		"resources": "resources.json",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"dataSources": {
+			"mainService": {
+				"uri": "/sap/opu/odata/sap/ZATTACHMENT_MANAGER_SRV",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0"
+				}
+			}
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		},
+		"supportedThemes": ["base", "sap_hcb", "sap_belize", "sap_belize_plus"]
+	},
+	"sap.ui5": {
+		"componentName": "rpan.lib.attachmentManager",
+		"dependencies": {
+			"minUI5Version": "1.52.0",
+			"libs": {
+				"sap.ui.core": {},
+				"sap.m": {}
+			},
+			"components": {}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"handleValidation": true,
+		"models": {
+			"attachmentManager": {
+				"dataSource": "mainService",
+				"settings": {
+					"defaultBindingMode": "TwoWay",
+					"defaultCountMode": "Inline",
+					"json": true,
+					"useBatch": true
+				}
+			},
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "rpan.lib.attachmentManager.i18n.i18n"
+				}
+			}
+		},
+		"resources": {
+			"css": [],
+			"js": []
+		}
+	}
+}
