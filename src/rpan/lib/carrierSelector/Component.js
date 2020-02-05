@@ -4,8 +4,11 @@ sap.ui.define([
 	"sap/m/TableSelectDialog",
 	"sap/m/ColumnListItem",
 	"sap/m/Column",
-	"sap/m/Link"
-], function(UIComponent, Text, TableSelectDialog, ColumnListItem, Column, Link) {
+	"sap/m/Link",
+	"sap/m/ObjectIdentifier",
+	"sap/ui/model/Filter",
+	"sap/ui/model/FilterOperator"
+], function(UIComponent, Text, TableSelectDialog, ColumnListItem, Column, Link, ObjectIdentifier, Filter, FilterOperator) {
 	"use strict";
 
 	const CarrierSelector = UIComponent.extend(
@@ -68,20 +71,38 @@ sap.ui.define([
 	// PUBLIC APIS
 	//=============================================================================
 
+	CarrierSelector.prototype.openDialog = function () {
+		this._carrierDialog.open();
+	};
+
 	//=============================================================================
 	// EVENT HANDLERS
 	//=============================================================================
 
 	CarrierSelector.prototype.onSearchCarriers = function (event) {
-		debugger;
+		const searchValue = event.getParameter("value");
+		const filter = new Filter("AirLineName", FilterOperator.Contains, searchValue);
+		const binding = event.getSource().getBinding("items");
+		binding.filter([filter]);
 	};
 
 	CarrierSelector.prototype.onConfirmDialog = function (event) {
-		debugger;
+		// reset the filter
+		var binding = event.getSource().getBinding("items");
+		binding.filter([]);
+
+		const contexts = event.getParameter("selectedContexts");
+		if (contexts && contexts.length) {
+			this.fireCarriersSelected({
+				carriers: contexts.map(context => context.getObject())
+			});
+		}
 	};
 
 	CarrierSelector.prototype.onCancelDialog = function (event) {
-		debugger;
+		// reset the filter
+		var binding = event.getSource().getBinding("items");
+		binding.filter([]);
 	};
 
 	//=============================================================================
@@ -110,7 +131,18 @@ sap.ui.define([
 				multiSelect: this.getIsMultiSelect(),
 				search: this.onSearchCarriers.bind(this),
 				confirm: this.onConfirmDialog.bind(this),
-				cancel: this.onCancelDialog.bind(this)
+				cancel: this.onCancelDialog.bind(this),
+				columns: [
+					new Column({
+						header: new Text({text: this._resourceBundle.getText("column.carrier")})
+					}),
+					new Column({
+						header: new Text({text: this._resourceBundle.getText("column.url")})
+					}),
+					new Column({
+						header: new Text({text: this._resourceBundle.getText("column.currency")})
+					})
+				]
 			}
 		);
 
@@ -119,29 +151,16 @@ sap.ui.define([
 			templateShareable: true,
 			template: this._getTemplate()
 		});
+
+		return dialog;
 	};
 
 	CarrierSelector.prototype._getTemplate = function () {
 		return new ColumnListItem({
-			columns: [
-				new Column({
-						text: this._resourceBundle.getText("column.carrier")
-					}),
-				new Column({
-					header: {
-						text: this._resourceBundle.getText("column.url")
-					}
-				}),
-				new Column({
-					header: {
-						text: this._resourceBundle.getText("column.currency")
-					}
-				})
-			],
 			cells: [
 				new ObjectIdentifier({
-					title: "{carriers>AirlineName}",
-					text: "{carriers>AirlineID}"
+					title: "{carriers>AirLineName}",
+					text: "{carriers>AirLineID}"
 				}),
 				new Link({
 					text: "{carriers>URL}"
